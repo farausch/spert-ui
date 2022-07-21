@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Graph from 'react-graph-vis';
 
 const prediction_service_url = "https://spert-api-mtvfo2xgia-ey.a.run.app/fs-predict?"
+const hierarchy_service_url = "http://localhost:5000/hierarchy?"
 
 async function predictSentence(sentence) {
     console.log("Calling prediction service...")
@@ -15,11 +16,24 @@ async function predictSentence(sentence) {
     return json
 }
 
+async function extractXbrlHierarchy(nodes) {
+    console.log("Calling hierarchy service...")
+    const res = await fetch(hierarchy_service_url,{
+            body: JSON.stringify(nodes),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            method: "POST"
+        })
+    const json = await res.json()
+    console.log(json)
+    return json
+}
+
 export default function Prediction() {
 
     const [hasMounted, setHasMounted] = useState(false);
     const [inputText, setInputText] = useState("");
-    const [prediction, setPrediction, getPrediction] = useState([]);
     const [graph, setGraph] = useState({ nodes: [], edges: [], rand: "" });
 
     useEffect(() => {
@@ -38,12 +52,11 @@ export default function Prediction() {
         edges: {
           color: "#000000"
         },
-        height: "500px"
+        height: "600px"
     };
 
-    async function handleClick() {
+    async function handleClickPredict() {
         const predictionRes = await predictSentence(inputText);
-        setPrediction(predictionRes);
         const id = 0
         const nodes = []
         const edges = []
@@ -62,6 +75,10 @@ export default function Prediction() {
                 edges.push({ from: head, to: tail, label: predictionRes[s]["relations"][r]["type"] })
             }
         }
+        const hierarchyRes = await extractXbrlHierarchy(nodes);
+        for (const newEdge of hierarchyRes) {
+            edges.push(newEdge)
+        }
         setGraph({
             nodes: nodes,
             edges: edges,
@@ -78,7 +95,7 @@ export default function Prediction() {
                     </Form.Group>
                 </Form>
                 <div className="d-grid gap-2">
-                    <Button className="btn-secondary" size='sm' onClick={handleClick}>Extract financial statement graph</Button>
+                    <Button className="btn-secondary" size='sm' onClick={handleClickPredict}>Extract financial statement graph</Button>
                 </div>
 			</Container>
             <Container>
