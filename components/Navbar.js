@@ -14,7 +14,7 @@ function Navigationbar() {
               className="d-inline-block align-top"
             />
           </Navbar.Brand>
-            <span className="align-middle">Financial entity detection and relation extraction</span>
+            <span className="align-middle">Financial Entity Detection and Relation Extraction</span>
             <span className="align-middle">EMNLP 2022 Demo</span>
         </Container>
       </Navbar>

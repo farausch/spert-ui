@@ -2,6 +2,7 @@ import Navigationbar from '../components/Navbar'
 import 'bootstrap/dist/css/bootstrap.css';
 
 import { useEffect } from "react";
+import Head from 'next/head';
 
 function MyApp({ Component, pageProps }) {
 
@@ -11,6 +12,9 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <>
+      <Head>
+        <title>EMNLP 2022 Demo</title>
+      </Head>
       <Navigationbar />
       <br/>
       <Component {...pageProps} />

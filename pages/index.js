@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Graph from 'react-graph-vis';
 
 const prediction_service_url = "https://spert-api-mtvfo2xgia-ey.a.run.app/fs-predict?"
-const hierarchy_service_url = "http://localhost:5000/hierarchy?"
+const hierarchy_service_url = "https://xbrl-hierarchy-extractor-mtvfo2xgia-ey.a.run.app/hierarchy?"
 
 async function predictSentence(sentence) {
     console.log("Calling prediction service...")
@@ -33,6 +33,7 @@ async function extractXbrlHierarchy(nodes) {
 export default function Prediction() {
 
     const [hasMounted, setHasMounted] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [inputText, setInputText] = useState("");
     const [graph, setGraph] = useState({ nodes: [], edges: [], rand: "" });
 
@@ -56,6 +57,7 @@ export default function Prediction() {
     };
 
     async function handleClickPredict() {
+        setLoading(true);
         const predictionRes = await predictSentence(inputText);
         const id = 0
         const nodes = []
@@ -84,6 +86,7 @@ export default function Prediction() {
             edges: edges,
             rand: Math.random()
         });
+        setLoading(false);
     }
 
     return (
@@ -99,6 +102,20 @@ export default function Prediction() {
                 </div>
 			</Container>
             <Container>
+                {loading &&
+                    <div>
+                        <br/>
+                        <div className="d-flex justify-content-center">
+                            <div className="spinner-border" role="status"></div>
+                        </div>
+                        <br/>
+                        <div className="d-flex justify-content-center">
+                            <div>Extracting graph... This can take up to one minute... Please wait...</div>
+                        </div>
+                    </div>
+                }
+            </Container>
+            <Container>
                 <Graph
                     key={graph.rand}
                     graph={graph}
@@ -109,3 +126,13 @@ export default function Prediction() {
     )
 
 }
+
+export async function getStaticProps() {
+    const loading = false
+  
+    return {
+      props: {
+        loading
+      },
+    }
+  }
