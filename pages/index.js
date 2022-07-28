@@ -94,7 +94,7 @@ export default function Prediction() {
 			<Container>
                 <Form>
                     <Form.Group className="mb-3" controlId="financial-statements-text-input">
-                        <Form.Control onChange={event => setInputText(event.target.value)} as="textarea" rows={5} placeholder="Text from financial statement" />
+                        <Form.Control onChange={event => setInputText(event.target.value)} as="textarea" rows={5} placeholder="Text from financial statement" defaultValue="Die Summe Aktiva beträgt TEUR 100, wobei das Anlagevermögen TEUR 90 beträgt. Das Umlaufvermögen hat sich gegenüber dem Vorjahr leicht auf TEUR 600 (Vorjahr: TEUR 400) erhöht. Hiervon entfallen TEUR 500 auf Guthaben bei Kreditinstituten. Die verminderte Körperschaftssteuer i.H.v. TEUR 10 (Vorjahr: TEUR 60) ist durch Steuererleichterungen aus der Corona-Krise zu begründen. Die Steuern vom Einkommen und vom Ertrag belaufen sich für das vergangene Geschäftsjahr auf TEUR 3 und sind damit nur unwesentlich gestiegen." />
                     </Form.Group>
                 </Form>
                 <div className="d-grid gap-2">
