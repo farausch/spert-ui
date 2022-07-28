@@ -34,7 +34,7 @@ export default function Prediction() {
 
     const [hasMounted, setHasMounted] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [inputText, setInputText] = useState("");
+    const [inputText, setInputText] = useState("Die Summe Aktiva beträgt TEUR 100, wobei das Anlagevermögen TEUR 90 beträgt. Das Umlaufvermögen hat sich gegenüber dem Vorjahr leicht auf TEUR 600 (Vorjahr: TEUR 400) erhöht. Hiervon entfallen TEUR 500 auf Guthaben bei Kreditinstituten. Die verminderte Körperschaftssteuer i.H.v. TEUR 10 (Vorjahr: TEUR 60) ist durch Steuererleichterungen aus der Corona-Krise zu begründen. Die Steuern vom Einkommen und vom Ertrag belaufen sich für das vergangene Geschäftsjahr auf TEUR 3 und sind damit nur unwesentlich gestiegen.");
     const [graph, setGraph] = useState({ nodes: [], edges: [], rand: "" });
 
     useEffect(() => {
